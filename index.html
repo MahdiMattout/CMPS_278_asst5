@@ -47,26 +47,12 @@
                         <td>Buy groceries for next week</td>
                         <td>In progress</td>
                         <td>
-                          <button type="submit" class="btn btn-danger">Delete</button>
-                          <button type="submit" class="btn btn-success ms-1">Finished</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Renew car insurance</td>
-                        <td>In progress</td>
-                        <td>
-                          <button type="submit" class="btn btn-danger">Delete</button>
-                          <button type="submit" class="btn btn-success ms-1">Finished</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Sign up for online course</td>
-                        <td>In progress</td>
-                        <td>
-                          <button type="submit" class="btn btn-danger">Delete</button>
-                          <button type="submit" class="btn btn-success ms-1">Finished</button>
+                          <form class="form-inline d-inline-block" method="delete" action="/task/id">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                          </form>
+                          <form class="form-inline d-inline-block" method="put" action="/task/toggle/id">
+                            <button type="submit" class="btn btn-success ms-1">Finished</button>
+                          </form>
                         </td>
                       </tr>
                     </tbody>
@@ -78,5 +64,6 @@
           </div>
         </div>
       </section>
+      <script src="index.js"></script>
   </body>
 </html>

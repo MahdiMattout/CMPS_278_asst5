@@ -1,0 +1,19 @@
+{
+  "name": "asst5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "backend.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MahdiMattout/CMPS_278_asst5.git"
+  },
+  "author": "Mahdi Mattout",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MahdiMattout/CMPS_278_asst5/issues"
+  },
+  "homepage": "https://github.com/MahdiMattout/CMPS_278_asst5#readme"
+}
