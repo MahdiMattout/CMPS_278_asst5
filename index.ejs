@@ -42,19 +42,21 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Buy groceries for next week</td>
-                        <td>In progress</td>
-                        <td>
-                          <form class="form-inline d-inline-block" method="delete" action="/task/id">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                          </form>
-                          <form class="form-inline d-inline-block" method="put" action="/task/toggle/id">
-                            <button type="submit" class="btn btn-success ms-1">Finished</button>
-                          </form>
-                        </td>
-                      </tr>
+                      <% tasks.forEach(task => { %>
+                        <tr>
+                          <th scope="row"><%= task.id %></th>
+                          <td><%= task.description %></td>
+                          <td><%= getStatus(task) %></td>
+                          <td>
+                            <form class="form-inline d-inline-block" method="delete" action="/task/:id">
+                              <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                            <form class="form-inline d-inline-block" method="put" action="/task/toggle/:id">
+                              <button type="submit" class="btn btn-success ms-1">Finished</button>
+                            </form>
+                          </td>
+                        </tr>
+                      <% }); %>
                     </tbody>
                   </table>
       
