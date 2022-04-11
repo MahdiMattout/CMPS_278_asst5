@@ -18,7 +18,7 @@
 
         $.ajax({
           type: 'POST',
-          url: '/',
+          url: '/task',
           data: $('#form1').serialize(),
           dataType: "json",
           success: function (response) {
@@ -33,48 +33,48 @@
       });
 
       $('table').on('click', '.delete-button', function () {
-
+        console.log('King Sami')
         var rowEl = $(this).closest('tr');
         var id = rowEl.find('.id').text();
         $.ajax({
           url: '/task/' + id,
           method: 'DELETE',
           contentType: 'application/json',
-          // success: function (response) {
-          //   Show();
-          // }
+          success: function (response) {
+            Show();
+          }
         });
       });
-      // $("#a").click(function () {
-      //   Show();
-      // });
-      // function Show() {
-      //   // alert("Show");
-      //   $.ajax({
-      //     type: 'GET',
-      //     url: '/task',
-      //     dataType: "json",
-      //     success: function (response) {
-      //       var tbodyEl = $('tbody');
+      $("#a").click(function () {
+        Show();
+      });
+      function Show() {
+        // alert("Show");
+        $.ajax({
+          type: 'GET',
+          url: '/',
+          dataType: "json",
+          success: function (response) {
+            var tbodyEl = $('tbody');
 
-      //       tbodyEl.html('');
+            tbodyEl.html('');
 
-      //       response.forEach(function (product) {
-      //         tbodyEl.append('\
-      //               <tr>\
-      //               <td class="id">' + product.unique_id + '</td>\
-      //               <td>' + product.title + '</td>\
-      //               <td>\
-      //               <button class="delete-button btn">Archives</button>\
-      //               </td>\
-      //               </tr>\
-      //               ');
-      //       });
-      //     },
-      //     error: function () {
-      //     }
-      //   })
-      // }
+            response.forEach(function (task) {
+              tbodyEl.append('\
+                    <tr>\
+                    <td class="id">' + task._id + '</td>\
+                    <td>' + task.Description + '</td>\
+                    <td>\
+                    <button class="delete-button btn">Delete</button>\
+                    </td>\
+                    </tr>\
+                    ');
+            });
+          },
+          error: function () {
+          }
+        })
+      }
     });
 
   </script>
@@ -114,13 +114,13 @@
                     <tbody>
                       <% tasks.forEach(task => { %>
                         <tr>
-                          <td><%= task._id %></th>
+                          <td class="id"><%= task._id %></th>
                           <td><%= task.Description %></td>
                           <td><%= getStatus(task) %></td>
                           <td>
-                            <form action="/task/<%=task._id%>">
-                            <button id="Delete" type="submit" class="btn btn-danger delete-button" onclick="e => {e.preventDefault()}">Delete</button>
-                            </form>
+                            
+                            <button id="Delete" type="submit" class="btn btn-danger delete-button">Delete</button>
+                            
                             <form class="form-inline d-inline-block" action="/task/toggle/:id">
                               <button type="submit" class="btn btn-success ms-1">Finished</button>
                             </form>
