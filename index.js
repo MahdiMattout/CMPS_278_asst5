@@ -50,6 +50,12 @@ app.get("/", async (req, res) => {
   });
 
 
+app.get("/task", async (req, res) => {
+    client.connect( async (err) => {
+      res.redirect('/')
+      });
+  });
+
 // Create a user based on client's input and store it in the database
 app.post('/task',async (req,res)=>{
     // Create the user JSON object that will be stored in the database
@@ -68,10 +74,9 @@ app.post('/task',async (req,res)=>{
 
 app.delete('/task/:id', async (req, res) => {
   client.connect(async (err) => {
-    const id = ObjectId(req.params.id);
+    const id = ObjectId(req.body._id)
     await client.db().collection('tasks').deleteOne({ _id: id }).catch(e => console.error(e))
     client.close();
-    res.redirect('/')
   })
 })
 

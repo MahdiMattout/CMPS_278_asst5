@@ -10,80 +10,77 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
-
-
-<script type="text/javascript">
-  $(document).ready(function () {
-    Show();
-    $("#form1").submit(function (event) {
-      event.preventDefault();
-
-      $.ajax({
-        type: 'POST',
-        url: '/',
-        data: $('#form1').serialize(),
-        dataType: "json",
-        success: function (response) {
-          $('#form1')[0].reset();
-          Show();
-          // alert('asssaaa');
-
-        },
-        error: function () {
-        }
-      })
-    });
-
-    $('table').on('click', '.delete-button', function () {
-
-      var rowEl = $(this).closest('tr');
-      var id = rowEl.find('.id').text();
-      $.ajax({
-        url: '/task/' + id,
-        method: 'DELETE',
-        contentType: 'application/json',
-        success: function (response) {
-
-          Show();
-        }
-      });
-    });
-    $("#a").click(function () {
+    <script type="text/javascript">
+    $(document).ready(function () {
       Show();
+      $("#form1").submit(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+          type: 'POST',
+          url: '/',
+          data: $('#form1').serialize(),
+          dataType: "json",
+          success: function (response) {
+            $('#form1')[0].reset();
+            Show();
+            // alert('asssaaa');
+
+          },
+          error: function () {
+          }
+        })
+      });
+
+      $('table').on('click', '.delete-button', function () {
+
+        var rowEl = $(this).closest('tr');
+        var id = rowEl.find('.id').text();
+        $.ajax({
+          url: '/task/' + id,
+          method: 'DELETE',
+          contentType: 'application/json',
+          // success: function (response) {
+          //   Show();
+          // }
+        });
+      });
+      // $("#a").click(function () {
+      //   Show();
+      // });
+      // function Show() {
+      //   // alert("Show");
+      //   $.ajax({
+      //     type: 'GET',
+      //     url: '/task',
+      //     dataType: "json",
+      //     success: function (response) {
+      //       var tbodyEl = $('tbody');
+
+      //       tbodyEl.html('');
+
+      //       response.forEach(function (product) {
+      //         tbodyEl.append('\
+      //               <tr>\
+      //               <td class="id">' + product.unique_id + '</td>\
+      //               <td>' + product.title + '</td>\
+      //               <td>\
+      //               <button class="delete-button btn">Archives</button>\
+      //               </td>\
+      //               </tr>\
+      //               ');
+      //       });
+      //     },
+      //     error: function () {
+      //     }
+      //   })
+      // }
     });
-    function Show() {
-      // alert("Show");
-      $.ajax({
-        type: 'GET',
-        url: '/task',
-        dataType: "json",
-        success: function (response) {
-          var tbodyEl = $('tbody');
 
-          tbodyEl.html('');
-
-          response.forEach(function (product) {
-            tbodyEl.append('\
-           				<tr>\
-           				<td class="id">' + product.unique_id + '</td>\
-           				<td>' + product.title + '</td>\
-           				<td>\
-           				<button class="delete-button btn">Archives</button>\
-           				</td>\
-           				</tr>\
-           				');
-          });
-        },
-        error: function () {
-        }
-      })
-    }
-  });
-
-</script>
+  </script>
   </head>
   <body>
-      <section class="vh-100" style="background-color: #eee;">
+      <section style="background-color: #eee;">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-lg-9 col-xl-7">
@@ -105,7 +102,7 @@
                     </div>
                   </form>
       
-                  <table class="table mb-4">
+                  <table class="table table-bordered mb-4 col-sm-5 col-md-7">
                     <thead>
                       <tr>
                         <th scope="col">No.</th>
@@ -117,14 +114,14 @@
                     <tbody>
                       <% tasks.forEach(task => { %>
                         <tr>
-                          <th scope="row"><%= task.id %></th>
-                          <td><%= task.description %></td>
+                          <td><%= task._id %></th>
+                          <td><%= task.Description %></td>
                           <td><%= getStatus(task) %></td>
                           <td>
-                            <form class="form-inline d-inline-block" method="delete" action='/task/<%= task.id %>'>
-                              <button type="submit" class="btn btn-danger">Delete</button>
+                            <form action="/task/<%=task._id%>">
+                            <button id="Delete" type="submit" class="btn btn-danger delete-button" onclick="e => {e.preventDefault()}">Delete</button>
                             </form>
-                            <form class="form-inline d-inline-block" method="put" action="/task/toggle/:id">
+                            <form class="form-inline d-inline-block" action="/task/toggle/:id">
                               <button type="submit" class="btn btn-success ms-1">Finished</button>
                             </form>
                           </td>
