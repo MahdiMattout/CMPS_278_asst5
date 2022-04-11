@@ -8,6 +8,79 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    Show();
+    $("#form1").submit(function (event) {
+      event.preventDefault();
+
+      $.ajax({
+        type: 'POST',
+        url: '/',
+        data: $('#form1').serialize(),
+        dataType: "json",
+        success: function (response) {
+          $('#form1')[0].reset();
+          Show();
+          // alert('asssaaa');
+
+        },
+        error: function () {
+        }
+      })
+    });
+
+    $('table').on('click', '.delete-button', function () {
+
+      var rowEl = $(this).closest('tr');
+      var id = rowEl.find('.id').text();
+      $.ajax({
+        url: '/task/' + id,
+        method: 'DELETE',
+        contentType: 'application/json',
+        success: function (response) {
+
+          Show();
+        }
+      });
+    });
+    $("#a").click(function () {
+      Show();
+    });
+    function Show() {
+      // alert("Show");
+      $.ajax({
+        type: 'GET',
+        url: '/task',
+        dataType: "json",
+        success: function (response) {
+          var tbodyEl = $('tbody');
+
+          tbodyEl.html('');
+
+          response.forEach(function (product) {
+            tbodyEl.append('\
+           				<tr>\
+           				<td class="id">' + product.unique_id + '</td>\
+           				<td>' + product.title + '</td>\
+           				<td>\
+           				<button class="delete-button btn">Archives</button>\
+           				</td>\
+           				</tr>\
+           				');
+          });
+        },
+        error: function () {
+        }
+      })
+    }
+  });
+
+</script>
   </head>
   <body>
       <section class="vh-100" style="background-color: #eee;">
@@ -23,7 +96,7 @@
                     <div class="col-12">
                       <div class="form-outline">
                         <label class="form-label" for="form1">Enter a task here</label>
-                        <input type="text" id="form1" class="form-control" />
+                        <input type="text" id="form1" class="form-control" name='Description'/>
                       </div>
                     </div>
       
@@ -48,7 +121,7 @@
                           <td><%= task.description %></td>
                           <td><%= getStatus(task) %></td>
                           <td>
-                            <form class="form-inline d-inline-block" method="delete" action="/task/:id">
+                            <form class="form-inline d-inline-block" method="delete" action='/task/<%= task.id %>'>
                               <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                             <form class="form-inline d-inline-block" method="put" action="/task/toggle/:id">
