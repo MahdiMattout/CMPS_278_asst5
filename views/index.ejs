@@ -24,26 +24,22 @@
 <body>
   <section style="background-color: #eee;">
     <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col col-lg-9 col-xl-7">
+      <div class="row h-100">
+        <div class="col-12">
           <div class="card rounded-3">
             <div class="card-body p-4">
               <h4 class="text-center my-3 pb-3">To Do App</h4>
-              <form id="saveTask" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2" method="post"
-                action="/task">
-                <div class="col-12">
+              <form id="saveTask" method="post" action="/task">
+                <div class="col-12 form-group mb-1">
                   <div class="form-outline">
                     <label class="form-label" for="form1">Enter a task here</label>
                     <input type="text" id="taskInput" class="form-control" name='Description' />
                   </div>
-                </div>
-
-                <div class="col-12">
                   <button type="submit" class="btn btn-primary mt-2">Save</button>
                 </div>
               </form>
 
-              <table class="table table-bordered mb-4">
+              <table class="table table-bordered mb-4 mt-2">
                 <thead>
                   <tr>
                     <th scope="col">No.</th>
