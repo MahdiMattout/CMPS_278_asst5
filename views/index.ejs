@@ -43,7 +43,7 @@
                 </div>
               </form>
 
-              <table class="table table-bordered mb-4 col-sm-5 col-md-7">
+              <table class="table table-bordered mb-4">
                 <thead>
                   <tr>
                     <th scope="col">No.</th>
@@ -55,7 +55,7 @@
                 <tbody>
                   <% tasks.forEach(task=> { %>
                     <tr>
-                      <td class="id">
+                      <th class="id" scope="row">
                         <%= task._id %>
                           </th>
                       <td>
