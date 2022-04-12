@@ -7,7 +7,9 @@ app.set('view engine', 'ejs')
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
-
+app.listen(process.env.PORT || 8000, () => {
+  console.log('now listening to port 8000');
+})
 
 const getStatus = (task) => {
   return task.isComplete ? 'Complete' : 'In Progress';
@@ -128,4 +130,3 @@ app.put('/task/toggle/:id', async (req, res) => {
 //   })
 //   .catch(e => console.error(e))
 
-app.listen(8000);
