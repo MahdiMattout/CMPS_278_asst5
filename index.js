@@ -13,18 +13,18 @@ const getStatus = (task) => {
   return task.isComplete ? 'Complete' : 'In Progress';
 }
 
-const whenFirstLoaded = (collection, response) => {
-  return collection.find().toArray()
-    .then(tasks => {
-    response.render('index.ejs', {
-      tasks: tasks,
-      getStatus: getStatus
-    });
-    })
-    .catch(e => console.error(e));
-}
+// const whenFirstLoaded = (collection, response) => {
+//   return collection.find().toArray()
+//     .then(tasks => {
+//     response.render('index.ejs', {
+//       tasks: tasks,
+//       getStatus: getStatus
+//     });
+//     })
+//     .catch(e => console.error(e));
+// }
 
-const client = new MongoClient(connectionString, {
+const client =  new MongoClient(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverApi: ServerApiVersion.v1,
@@ -39,15 +39,15 @@ client.connect((err) => {
 });
   
 app.get("/", async (req, res) => {
-  client.connect( async (err) => {
-  const collection = client.db().collection('tasks');
-  const tasks = await collection.find().toArray();// get all json objects in the collection
-  client.close();
-  return res.render("index", { tasks:tasks, getStatus: getStatus });// render the ejs file named 'index' and pass the object users
+    client.connect( async (err) => {
+        const collection = client.db().collection('tasks');
+        const tasks = await collection.find().toArray();// get all json objects in the collection
+        console.log("All documents=:"+tasks)
+        client.close();
+        return res.render("index", { tasks:tasks, getStatus: getStatus });// render the ejs file named 'index' and pass the object users
+      });
+    
   });
-
-  });
-
 
 app.get("/task", async (req, res) => {
     client.connect( async (err) => {
@@ -71,15 +71,27 @@ app.post('/task',async (req,res)=>{
 
 });
 
-app.delete('/task/:id', async (req, res) => {
+app.delete('/task/:id', async (req, res) =>  {
   client.connect(async (err) => {
-    console.log(req.params.id)
+    console.log(req.params)
     const id = ObjectId(req.params.id.trim())
     console.log(id)
     await client.db().collection('tasks').deleteOne({ _id: id }).catch(e => console.error(e))
     client.close();
   })
 })
+
+app.put('/task/toggle/:id', async (req, res) => {
+ client.connect( async (err) => {
+    console.log(req.params.id)
+    const id = ObjectId(req.params.id.trim())
+    console.log(id)
+    const task = async () => await client.db().collection('tasks').findOne({ _id: id }).then( await client.db().collection('tasks').updateOne({ _id: id }, {$set: {isComplete: !task.isComplete}}))
+    client.close()
+  })
+ 
+})
+
 
 // MongoClient.connect(connectionString)
 //   .then(client => {

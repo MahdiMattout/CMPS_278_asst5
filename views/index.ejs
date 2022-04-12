@@ -49,7 +49,19 @@
           method: 'DELETE',
           contentType: 'application/json',
           success: function (response) {
-            location.reload();
+            Show();
+          }
+        });
+      });
+      $('table').on('click', '.finished-button', function () {
+        console.log('King Sami')
+        var rowEl = $(this).closest('tr');
+        var id = rowEl.find('.id').text();
+        $.ajax({
+          url: '/task/toggle/' + id,
+          method: 'PUT',
+          contentType: 'application/json',
+          success: function (response) {
             Show();
           }
         });
@@ -135,10 +147,14 @@
                         <%= getStatus(task) %>
                       </td>
                       <td>
-                        <button id="Delete" type="submit" class="btn btn-danger delete-button" onclick="location.reload()">Delete</button>
-                        <form class="form-inline d-inline-block" action="/task/toggle/:id">
-                          <button type="submit" class="btn btn-success ms-1">Finished</button>
-                        </form>
+
+                        <button id="Delete" type="submit" onclick="location.reload();"
+                          class="btn btn-danger delete-button">Delete</button>
+
+
+                        <button type="submit" class="btn btn-success finished-button ms-1" onclick="location.reload();">
+                          Finished</button>
+
                       </td>
                     </tr>
                     <% }); %>
