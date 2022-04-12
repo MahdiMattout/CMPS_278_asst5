@@ -7,7 +7,7 @@ app.set('view engine', 'ejs')
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
-app.listen(process.env.PORT || 8000, () => {
+const server = app.listen(process.env.PORT || 8000, () => {
   console.log('now listening to port 8000');
 })
 
