@@ -19,87 +19,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"></script>
-  <!-- <script type="text/javascript">
-    $(document).ready(function () {
-      Show();
-      $("#form1").submit(function (event) {
-        event.preventDefault();
-
-        $.ajax({
-          type: 'POST',
-          url: '/task',
-          data: $('#form1').serialize(),
-          dataType: "json",
-          success: function (response) {
-            $('#form1')[0].reset();
-            Show();
-            // alert('asssaaa');
-
-          },
-          error: function () {
-          }
-        })
-      });
-
-      $('table').on('click', '.delete-button', function () {
-        console.log('King Sami')
-        var rowEl = $(this).closest('tr');
-        var id = rowEl.find('.id').text();
-        $.ajax({
-          url: '/task/' + id,
-          method: 'DELETE',
-          contentType: 'application/json',
-          success: function (response) {
-            Show();
-          }
-        });
-      });
-      $('table').on('click', '.finished-button', function () {
-        console.log('King Sami')
-        var rowEl = $(this).closest('tr');
-        var id = rowEl.find('.id').text();
-        $.ajax({
-          url: '/task/toggle/' + id,
-          method: 'PUT',
-          contentType: 'application/json',
-          success: function (response) {
-            Show();
-          }
-        });
-      });
-      $("#a").click(function () {
-        Show();
-      });
-      function Show() {
-        // alert("Show");
-        $.ajax({
-          type: 'GET',
-          url: '/',
-          dataType: "json",
-          success: function (response) {
-            var tbodyEl = $('tbody');
-
-            tbodyEl.html('');
-
-            response.forEach(function (task) {
-              tbodyEl.append('\
-                    <tr>\
-                    <td class="id">' + task._id + '</td>\
-                    <td>' + task.Description + '</td>\
-                    <td>\
-                    <button class="delete-button btn">Delete</button>\
-                    </td>\
-                    </tr>\
-                    ');
-            });
-          },
-          error: function () {
-          }
-        })
-      }
-    });
-
-  </script> -->
 </head>
 
 <body>
@@ -109,9 +28,7 @@
         <div class="col col-lg-9 col-xl-7">
           <div class="card rounded-3">
             <div class="card-body p-4">
-
               <h4 class="text-center my-3 pb-3">To Do App</h4>
-
               <form id="saveTask" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2" method="post"
                 action="/task">
                 <div class="col-12">
