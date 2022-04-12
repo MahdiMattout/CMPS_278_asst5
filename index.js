@@ -1,4 +1,4 @@
-const { MongoClient, ObjectId, ServerApiVersion } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const connectionString = 'mongodb+srv://TodoAppMahdi:TodoAppAsst123@todoapp.kym6d.mongodb.net/TodoApp?retryWrites=true&w=majority'
 const express = require('express');
 const bodyparser = require("body-parser");
