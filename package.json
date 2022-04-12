@@ -2,9 +2,10 @@
   "name": "asst5",
   "version": "1.0.0",
   "description": "",
-  "main": "backend.js",
+  "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node start"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,9 @@
   "homepage": "https://github.com/MahdiMattout/CMPS_278_asst5#readme",
   "dependencies": {
     "ajax": "^0.0.4",
-    "ejs": "^3.1.6"
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "mongodb": "^4.5.0",
+    "request": "^2.88.2"
   }
 }

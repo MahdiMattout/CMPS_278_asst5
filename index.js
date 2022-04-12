@@ -39,14 +39,13 @@ client.connect((err) => {
 });
   
 app.get("/", async (req, res) => {
-    client.connect( async (err) => {
-        const collection = client.db().collection('tasks');
-        const tasks = await collection.find().toArray();// get all json objects in the collection
-        console.log("All documents=:"+tasks)
-        client.close();
-        return res.render("index", { tasks:tasks, getStatus: getStatus });// render the ejs file named 'index' and pass the object users
-      });
-    
+  client.connect( async (err) => {
+  const collection = client.db().collection('tasks');
+  const tasks = await collection.find().toArray();// get all json objects in the collection
+  client.close();
+  return res.render("index", { tasks:tasks, getStatus: getStatus });// render the ejs file named 'index' and pass the object users
+  });
+
   });
 
 
@@ -74,7 +73,9 @@ app.post('/task',async (req,res)=>{
 
 app.delete('/task/:id', async (req, res) => {
   client.connect(async (err) => {
-    const id = ObjectId(req.body._id)
+    console.log(req.params.id)
+    const id = ObjectId(req.params.id.trim())
+    console.log(id)
     await client.db().collection('tasks').deleteOne({ _id: id }).catch(e => console.error(e))
     client.close();
   })
@@ -116,4 +117,3 @@ app.delete('/task/:id', async (req, res) => {
 //   .catch(e => console.error(e))
 
 app.listen(8000);
-
