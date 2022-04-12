@@ -111,12 +111,12 @@
 
               <h4 class="text-center my-3 pb-3">To Do App</h4>
 
-              <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2" method="post"
+              <form id="saveTask" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2" method="post"
                 action="/task">
                 <div class="col-12">
                   <div class="form-outline">
                     <label class="form-label" for="form1">Enter a task here</label>
-                    <input type="text" id="form1" class="form-control" name='Description' />
+                    <input type="text" id="taskInput" class="form-control" name='Description' />
                   </div>
                 </div>
 
@@ -147,14 +147,15 @@
                         <%= getStatus(task) %>
                       </td>
                       <td>
-
+                        <form id="deleteForm" style="display: inline-block" onsubmit="deleteTask(`<%= task._id %>`)">
                         <button id="Delete" type="submit" onclick="location.reload();"
                           class="btn btn-danger delete-button">Delete</button>
-
-
-                        <button type="submit" class="btn btn-success finished-button ms-1" onclick="location.reload();">
-                          Finished</button>
-
+                        </form>
+                        <form id="completeForm" style="display: inline-block" onsubmit="toggleComplete(`<%= task._id %>`)">
+                          <button type="submit" class="btn btn-success">
+                            <%= task.isComplete ? 'InComplete' : 'Complete' %>
+                          </button>
+                        </form>
                       </td>
                     </tr>
                     <% }); %>
@@ -168,8 +169,8 @@
     </div>
   </section>
   <script src="index.js"></script>
-  <!-- <script>
-    const addTaskForm = document.getElementById("addTaskForm");
+  <script>
+    const saveTask = document.getElementById("saveTask");
     const taskInput = document.getElementById("taskInput");
     const completeForm = document.getElementById("completeForm");
     const deleteForm = document.getElementById("deleteForm");
@@ -183,15 +184,15 @@
         },
       }).then(() => addTaskForm.submit());
     });
-    // async function deleteTask(taskId) {
-    //   event.preventDefault();
-    //   return axios.delete(`task/${taskId}`).then(() => deleteForm.submit());
+    async function deleteTask(taskId) {
+      event.preventDefault();
+      return axios.delete(`task/${taskId}`).then(() => deleteForm.submit());
+    }
+    async function toggleComplete(taskId) {
+      event.preventDefault();
+      return axios.put(`task/toggle/${taskId}`).then(() => completeForm.submit());
     // }
-    // async function toggleComplete(taskId) {
-    //   event.preventDefault();
-    //   return axios.put(`task/toggle/${taskId}`).then(() => completeForm.submit());
-    // }
-  </script> -->
+  </script>
 </body>
 
 </html>

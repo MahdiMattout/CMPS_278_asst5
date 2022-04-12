@@ -100,13 +100,13 @@ MongoClient.connect(connectionString)
     console.log('Connected Successfully!');
     const db = client.db();
     const tasksCollection = db.collection('tasks');
-    app.get('/', (req, res) => {
+    app.get('/', async (req, res) => {
       return whenFirstLoaded(tasksCollection, res);
     })
-    app.get('/task', (req, res) => {
+    app.get('/task', async (req, res) => {
       whenFirstLoaded(tasksCollection, res);
     })
-    app.post('/task', (req, res) => {
+    app.post('/task', async (req, res) => {
       req.body['isComplete'] = false;
       tasksCollection.insertOne(req.body).then(() => whenFirstLoaded(tasksCollection, res));
     })
@@ -118,16 +118,16 @@ MongoClient.connect(connectionString)
           if (result.deletedCount === 0) {
             res.send('Task not found')
           } else {
-            res.redirect('/')
+            whenFirstLoaded(tasksCollection, res)
           }
         }).catch(e => console.error(e))
     })
     app.put('/task/toggle/:id', async (req, res) => {
       const id = new ObjectId(req.params.id.trim());
-      return tasksCollection.find({ _id: id }).toArray().then((tasks) => {
+      return tasksCollection.find({ _id: id }).toArray().then(async (tasks) => {
         if (tasks.length > 0) {
           const task = tasks[0];
-          return tasksCollection.updateOne({ _id: id }, { '$set': { isComplete: !task['isComplete'] } })
+          return tasksCollection.updateOne({ _id: id }, { '$set': { isComplete: !task.isComplete } })
             .then((result) => {
               return whenFirstLoaded(tasksCollection, res);
             })
