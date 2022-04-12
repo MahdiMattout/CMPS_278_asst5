@@ -191,7 +191,7 @@
     async function toggleComplete(taskId) {
       event.preventDefault();
       return axios.put(`task/toggle/${taskId}`).then(() => completeForm.submit());
-    // }
+    }
   </script>
 </body>
 
